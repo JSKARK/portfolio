@@ -489,6 +489,12 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
   grid-column: 1 / -1;
   margin-top: 8px;
 }
+.tcard > .det-figure{
+  border-top:1px solid var(--line);
+  padding-top:22px;
+  margin-top:0;
+  padding-bottom:4px;
+}
 .det-figure img{
   width: 100%; border-radius: 10px;
   border: 1px solid var(--line);
@@ -586,6 +592,21 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
   transition:background .25s;
 }
 .lb-close:hover{ background:rgba(255,255,255,.2); }
+.lb-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:52px; height:52px; border-radius:50%;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+  color:var(--text-onink); cursor:pointer;
+  display:grid; place-items:center;
+  transition:background .25s, border-color .25s;
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); z-index:1;
+}
+.lb-prev{ left:24px; }
+.lb-next{ right:24px; }
+.lb-arrow:hover{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+.lb-arrow svg{ width:20px; height:20px; }
+.lb-arrow.hidden{ visibility:hidden; pointer-events:none; }
+@media (max-width:680px){ .lb-prev{ left:10px; } .lb-next{ right:10px; } }
 
 /* tag pills */
 .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
@@ -967,13 +988,13 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
               <h5>開発規模 / 運用状況</h5>
               <p>設計〜実装〜配布まで単独担当。CS9名 + 制作2名の計11名が日常業務として利用中（2024年〜）。ヒューマンエラー発生率 ほぼ0。</p>
             </div>
-            <figure class="det-figure">
-              <img src="python-app-flow.png" alt="画像補正アプリ システム構成図" loading="lazy" />
-              <figcaption>システム構成図 — 依頼側（CS）と補正側（制作）の連携フロー</figcaption>
-            </figure>
           </div>
         </details>
         </div>
+        <figure class="det-figure">
+          <img src="python-app-flow.png" alt="画像補正アプリ システム構成図" loading="lazy" />
+          <figcaption>システム構成図 — 依頼側（CS）と補正側（制作）の連携フロー</figcaption>
+        </figure>
       </article>
 
       <!-- TOP 2 -->
@@ -1044,13 +1065,13 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
               <h5>開発規模 / 運用状況</h5>
               <p>設計〜実装〜運用移行まで単独担当。4部署・年間800件の運用を担う基幹フローとして現在も稼働中。誤送信・ダブルブッキングをゼロ化。</p>
             </div>
-            <figure class="det-figure">
-              <img src="gas-flow.png" alt="GAS 自動化 業務フロー図" loading="lazy" />
-              <figcaption>業務フロー図 — 取材確定から納品確認までの全自動化の流れ</figcaption>
-            </figure>
           </div>
         </details>
         </div>
+        <figure class="det-figure">
+          <img src="gas-flow.png" alt="GAS 自動化 業務フロー図" loading="lazy" />
+          <figcaption>業務フロー図 — 取材確定から納品確認までの全自動化の流れ</figcaption>
+        </figure>
       </article>
 
       <!-- TOP 3 -->
@@ -1142,7 +1163,7 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
       <div class="audio__copy">
         <span class="eyebrow" style="color:var(--gold-soft)">NotebookLM Audio Overview</span>
         <h3>業務改善ポートフォリオ<br />音声ダイジェスト</h3>
-        <p>3つの主要プロジェクトと横断改善の考え方を、約10分の対話音声に凝縮。右の枠に NotebookLM の共有 iframe を差し込むだけで再生できます。</p>
+        <p>3つの主要プロジェクトと横断改善の考え方を、約16分の対話音声に凝縮しました。</p>
         <div class="audio__wave" aria-hidden="true">
           <i style="height:30%;animation-delay:0s"></i><i style="height:70%;animation-delay:.1s"></i><i style="height:45%;animation-delay:.2s"></i><i style="height:90%;animation-delay:.3s"></i><i style="height:55%;animation-delay:.15s"></i><i style="height:80%;animation-delay:.25s"></i><i style="height:35%;animation-delay:.35s"></i><i style="height:65%;animation-delay:.05s"></i><i style="height:50%;animation-delay:.4s"></i><i style="height:85%;animation-delay:.2s"></i><i style="height:40%;animation-delay:.3s"></i><i style="height:72%;animation-delay:.1s"></i>
         </div>
@@ -1214,7 +1235,13 @@ html.js .reveal.pre[data-d="4"]{ transition-delay:.32s; }
 <!-- Lightbox -->
 <div class="lb-overlay" id="lbOverlay" role="dialog" aria-modal="true">
   <button class="lb-close" id="lbClose" aria-label="閉じる">&times;</button>
+  <button class="lb-arrow lb-prev" id="lbPrev" aria-label="前のスライド">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
   <img class="lb-img" id="lbImg" src="" alt="" />
+  <button class="lb-arrow lb-next" id="lbNext" aria-label="次のスライド">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
 </div>
 
 <!-- ============================ PROJECTS ============================ -->
@@ -1543,9 +1570,14 @@ document.querySelectorAll('.nav__mark').forEach(mark => {
   document.getElementById('slidePrev').addEventListener('click', () => goTo(cur - 1));
   dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.dot)));
 
-  // Keyboard
+  // Keyboard (slides + lightbox)
   document.addEventListener('keydown', e => {
-    if(document.getElementById('lbOverlay').classList.contains('open')) return;
+    if(lb.classList.contains('open')){
+      if(e.key === 'Escape') closeLb();
+      if(e.key === 'ArrowLeft') lbNav(-1);
+      if(e.key === 'ArrowRight') lbNav(1);
+      return;
+    }
     if(e.key === 'ArrowRight') goTo(cur + 1);
     if(e.key === 'ArrowLeft')  goTo(cur - 1);
   });
@@ -1561,26 +1593,37 @@ document.querySelectorAll('.nav__mark').forEach(mark => {
   // Lightbox
   const lb = document.getElementById('lbOverlay');
   const lbImg = document.getElementById('lbImg');
-  frames.forEach(f => {
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  let lbIdx = null;
+  const openLb = (src, alt, idx) => {
+    lbImg.src = src; lbImg.alt = alt; lbIdx = idx;
+    lbPrev.classList.toggle('hidden', idx === null);
+    lbNext.classList.toggle('hidden', idx === null);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const lbNav = (dir) => {
+    if(lbIdx === null) return;
+    lbIdx = (lbIdx + dir + total) % total;
+    const img = frames[lbIdx].querySelector('img');
+    lbImg.src = img.src; lbImg.alt = img.alt;
+  };
+  frames.forEach((f, i) => {
     f.addEventListener('click', () => {
       const img = f.querySelector('img');
-      lbImg.src = img.src; lbImg.alt = img.alt;
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
+      openLb(img.src, img.alt, i);
     });
   });
   document.querySelectorAll('.det-figure img').forEach(img => {
     img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      lbImg.src = img.src; lbImg.alt = img.alt;
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
+    img.addEventListener('click', () => openLb(img.src, img.alt, null));
   });
-  const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  lbPrev.addEventListener('click', e => { e.stopPropagation(); lbNav(-1); });
+  lbNext.addEventListener('click', e => { e.stopPropagation(); lbNav(1); });
+  const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; lbIdx = null; };
   document.getElementById('lbClose').addEventListener('click', closeLb);
   lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
-  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLb(); });
 })();
 
 </script>
